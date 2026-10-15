@@ -1,5 +1,6 @@
+
 import React, { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import {
   AppBar,
   Toolbar,
@@ -12,13 +13,10 @@ import {
   ListItemText,
   ListItemIcon,
   Box,
-  useMediaQuery,
-  useTheme,
   Avatar,
   Menu,
   MenuItem,
   Badge,
-  Tooltip,
   Container,
   Stack,
 } from '@mui/material';
@@ -31,8 +29,6 @@ import {
   AccountCircle,
   Home,
 } from '@mui/icons-material';
-import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
 
 const NEXORA_LOGO = `data:image/svg+xml;base64,${btoa(`<?xml version="1.0" encoding="UTF-8"?>
 <svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -86,7 +82,8 @@ function Navbar() {
     <AppBar
       position="fixed"
       sx={{
-        background: 'linear-gradient(145deg, rgba(18, 18, 18, 0.95), rgba(46, 46, 46, 0.95))',
+        background:
+          'linear-gradient(145deg, rgba(18, 18, 18, 0.95), rgba(46, 46, 46, 0.95))',
         backdropFilter: 'blur(10px)',
         borderBottom: '1px solid rgba(0, 255, 153, 0.1)',
         boxShadow: '0 0 20px rgba(0, 255, 153, 0.1)',
@@ -99,23 +96,23 @@ function Navbar() {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ 
-              mr: 2, 
+            sx={{
+              mr: 2,
               display: { md: 'none' },
               '&:hover': {
                 background: 'rgba(0, 255, 153, 0.1)',
-              }
+              },
             }}
           >
             <MenuIcon />
           </IconButton>
 
           {/* Logo and Brand */}
-          <Stack 
-            direction="row" 
-            alignItems="center" 
-            spacing={1} 
-            sx={{ 
+          <Stack
+            direction="row"
+            alignItems="center"
+            spacing={1}
+            sx={{
               flexGrow: 1,
               cursor: 'pointer',
               '&:hover': {
@@ -143,7 +140,7 @@ function Navbar() {
               }}
               className="logo-n"
             />
-            
+
             {/* Brand Text */}
             <Stack spacing={0}>
               <Typography
@@ -159,6 +156,7 @@ function Navbar() {
               >
                 NEXORA
               </Typography>
+
               <Typography
                 variant="caption"
                 sx={{
@@ -173,6 +171,7 @@ function Navbar() {
             </Stack>
           </Stack>
 
+          {/* Desktop Navigation */}
           <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2 }}>
             {navItems.map((item) => (
               <Button
@@ -190,7 +189,8 @@ function Navbar() {
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    background: 'linear-gradient(45deg, rgba(0, 255, 153, 0.1), rgba(26, 143, 255, 0.1))',
+                    background:
+                      'linear-gradient(45deg, rgba(0, 255, 153, 0.1), rgba(26, 143, 255, 0.1))',
                     borderRadius: '8px',
                     zIndex: -1,
                     opacity: 0,
@@ -211,27 +211,38 @@ function Navbar() {
             ))}
           </Box>
 
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, ml: 2 }}>
-            <IconButton 
+          {/* Notifications and User Menu */}
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 1,
+              ml: 2,
+            }}
+          >
+            <IconButton
               color="inherit"
+              aria-label="notifications"
               sx={{
                 '&:hover': {
                   background: 'rgba(0, 255, 153, 0.1)',
-                }
+                },
               }}
             >
               <Badge badgeContent={3} color="error">
                 <Notifications />
               </Badge>
             </IconButton>
+
             <IconButton
+              aria-label="open user menu"
               onClick={handleOpenUserMenu}
-              sx={{ 
+              sx={{
                 p: 0,
                 '&:hover': {
                   transform: 'scale(1.1)',
                   transition: 'transform 0.3s ease',
-                }
+                },
               }}
             >
               <Avatar
@@ -248,6 +259,7 @@ function Navbar() {
             </IconButton>
           </Box>
 
+          {/* User Menu */}
           <Menu
             sx={{ mt: '45px' }}
             id="menu-appbar"
@@ -265,7 +277,8 @@ function Navbar() {
             onClose={handleCloseUserMenu}
             PaperProps={{
               sx: {
-                background: 'linear-gradient(145deg, rgba(18, 18, 18, 0.95), rgba(46, 46, 46, 0.95))',
+                background:
+                  'linear-gradient(145deg, rgba(18, 18, 18, 0.95), rgba(46, 46, 46, 0.95))',
                 backdropFilter: 'blur(10px)',
                 border: '1px solid rgba(0, 255, 153, 0.1)',
                 boxShadow: '0 0 20px rgba(0, 255, 153, 0.1)',
@@ -280,9 +293,11 @@ function Navbar() {
             <MenuItem onClick={handleProfileClick}>
               <Typography textAlign="center">Profile</Typography>
             </MenuItem>
+
             <MenuItem onClick={handleCloseUserMenu}>
               <Typography textAlign="center">Settings</Typography>
             </MenuItem>
+
             <MenuItem onClick={handleCloseUserMenu}>
               <Typography textAlign="center">Logout</Typography>
             </MenuItem>
@@ -290,6 +305,7 @@ function Navbar() {
         </Toolbar>
       </Container>
 
+      {/* Mobile Navigation Drawer */}
       <Drawer
         variant="temporary"
         anchor="left"
@@ -300,7 +316,8 @@ function Navbar() {
         }}
         sx={{
           '& .MuiDrawer-paper': {
-            background: 'linear-gradient(145deg, rgba(18, 18, 18, 0.95), rgba(46, 46, 46, 0.95))',
+            background:
+              'linear-gradient(145deg, rgba(18, 18, 18, 0.95), rgba(46, 46, 46, 0.95))',
             backdropFilter: 'blur(10px)',
             borderRight: '1px solid rgba(0, 255, 153, 0.1)',
             boxShadow: '0 0 20px rgba(0, 255, 153, 0.1)',
@@ -325,7 +342,8 @@ function Navbar() {
               <ListItemIcon sx={{ color: '#00FF99' }}>
                 {item.icon}
               </ListItemIcon>
-              <ListItemText 
+
+              <ListItemText
                 primary={item.text}
                 sx={{ color: 'white' }}
               />
